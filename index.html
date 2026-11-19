@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tribhuvan Kumar Reddy — AI Engineer</title>
+  <meta name="description" content="AI Engineer building LLM evaluation, RAG systems, and production ML applications." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Syne:wght@500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0b1210;
+      --bg-2: #111a16;
+      --ink: #e8f0ea;
+      --muted: #8fa396;
+      --faint: #5c7064;
+      --line: rgba(232, 240, 234, 0.1);
+      --accent: #3dffa8;
+      --accent-dim: rgba(61, 255, 168, 0.14);
+      --warm: #c4a574;
+      --display: "Syne", system-ui, sans-serif;
+      --serif: "Instrument Serif", Georgia, serif;
+      --mono: "IBM Plex Mono", ui-monospace, monospace;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--display);
+      font-size: 17px;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+
+    .wrap {
+      width: min(1120px, calc(100% - 2.5rem));
+      margin-inline: auto;
+    }
+
+    /* Nav */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(14px);
+      background: rgba(11, 18, 16, 0.72);
+      border-bottom: 1px solid transparent;
+      transition: border-color .3s;
+    }
+    .nav.scrolled { border-bottom-color: var(--line); }
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 0;
+      gap: 1rem;
+    }
+    .brand {
+      font-family: var(--mono);
+      font-size: .78rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+    .nav-links {
+      display: flex;
+      gap: 1.25rem;
+      list-style: none;
+      font-size: .88rem;
+      color: var(--muted);
+    }
+    .nav-links a { transition: color .2s; }
+    .nav-links a:hover { color: var(--ink); }
+    @media (max-width: 640px) {
+      .nav-links { display: none; }
+    }
+
+    /* Hero */
+    .hero {
+      position: relative;
+      min-height: min(100vh, 920px);
+      display: grid;
+      align-items: end;
+      padding: 4rem 0 4.5rem;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 70% 20%, rgba(61, 255, 168, 0.16), transparent 55%),
+        radial-gradient(ellipse 50% 40% at 15% 80%, rgba(196, 165, 116, 0.12), transparent 50%),
+        linear-gradient(180deg, #0d1612 0%, var(--bg) 100%);
+      animation: atmosphere 14s ease-in-out infinite alternate;
+    }
+    .hero-bg::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(61, 255, 168, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(61, 255, 168, 0.04) 1px, transparent 1px);
+      background-size: 56px 56px;
+      mask-image: linear-gradient(180deg, #000 30%, transparent 90%);
+      -webkit-mask-image: linear-gradient(180deg, #000 30%, transparent 90%);
+    }
+    @keyframes atmosphere {
+      from { filter: hue-rotate(0deg) saturate(1); }
+      to { filter: hue-rotate(12deg) saturate(1.15); }
+    }
+
+    .hero-copy {
+      position: relative;
+      display: grid;
+      gap: 1.35rem;
+      max-width: 44rem;
+    }
+    .hero h1 {
+      font-size: clamp(3.4rem, 10vw, 6.4rem);
+      font-weight: 800;
+      line-height: .92;
+      letter-spacing: -0.03em;
+      text-wrap: balance;
+    }
+    .hero h1 em {
+      font-family: var(--serif);
+      font-style: italic;
+      font-weight: 400;
+      color: var(--accent);
+    }
+    .hero-sub {
+      font-family: var(--serif);
+      font-size: clamp(1.25rem, 2.4vw, 1.65rem);
+      line-height: 1.35;
+      color: var(--ink);
+      max-width: 28ch;
+    }
+    .hero-lede {
+      color: var(--muted);
+      max-width: 48ch;
+      font-size: 1.02rem;
+    }
+    .cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .75rem;
+      margin-top: .4rem;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      padding: .85rem 1.25rem;
+      border-radius: 999px;
+      font-size: .9rem;
+      font-weight: 600;
+      border: 1px solid var(--line);
+      transition: transform .2s, background .2s, border-color .2s;
+    }
+    .btn:hover { transform: translateY(-2px); }
+    .btn-primary {
+      background: var(--accent);
+      color: #062014;
+      border-color: var(--accent);
+    }
+    .btn-primary:hover { background: #6fffc0; }
+    .btn-ghost:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    /* Sections */
+    section {
+      padding: 5.5rem 0;
+      border-top: 1px solid var(--line);
+    }
+    .label {
+      font-family: var(--mono);
+      font-size: .72rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: .85rem;
+    }
+    .section-title {
+      font-size: clamp(1.9rem, 4vw, 2.7rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: .65rem;
+    }
+    .section-lede {
+      color: var(--muted);
+      max-width: 48ch;
+      margin-bottom: 2.4rem;
+      font-size: 1.02rem;
+    }
+
+    /* Reveal */
+    .reveal {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity .7s ease, transform .7s ease;
+    }
+    .reveal.in {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* Experience */
+    .timeline {
+      display: grid;
+      gap: 0;
+    }
+    .job {
+      display: grid;
+      grid-template-columns: 140px 1fr;
+      gap: 1.5rem;
+      padding: 1.6rem 0;
+      border-top: 1px solid var(--line);
+    }
+    @media (max-width: 700px) {
+      .job { grid-template-columns: 1fr; gap: .5rem; }
+    }
+    .job-when {
+      font-family: var(--mono);
+      font-size: .78rem;
+      color: var(--faint);
+      padding-top: .35rem;
+    }
+    .job h3 {
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: .2rem;
+    }
+    .job .org {
+      color: var(--warm);
+      font-size: .95rem;
+      margin-bottom: .7rem;
+    }
+    .job p { color: var(--muted); max-width: 62ch; }
+
+    /* Projects */
+    .projects {
+      display: grid;
+      gap: 1.1rem;
+    }
+    .project {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 1.25rem;
+      align-items: start;
+      padding: 1.5rem 0;
+      border-top: 1px solid var(--line);
+      transition: background .25s;
+    }
+    .project:hover .p-num { color: var(--accent); }
+    .p-num {
+      font-family: var(--mono);
+      font-size: .8rem;
+      color: var(--faint);
+      padding-top: .35rem;
+      transition: color .25s;
+    }
+    .project h3 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: .45rem;
+    }
+    .project p {
+      color: var(--muted);
+      max-width: 58ch;
+      margin-bottom: .85rem;
+    }
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .4rem;
+    }
+    .tag {
+      font-family: var(--mono);
+      font-size: .68rem;
+      padding: .28rem .55rem;
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      color: var(--muted);
+    }
+
+    /* Skills */
+    .skill-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem;
+    }
+    .skill-block h3 {
+      font-size: .95rem;
+      margin-bottom: .55rem;
+      color: var(--warm);
+    }
+    .skill-block p {
+      font-family: var(--mono);
+      font-size: .78rem;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    /* Contact */
+    .contact {
+      background:
+        radial-gradient(ellipse 60% 80% at 50% 120%, rgba(61, 255, 168, 0.1), transparent 55%);
+    }
+    .contact-panel {
+      display: grid;
+      gap: 1.5rem;
+    }
+    .contact a.mail {
+      font-family: var(--serif);
+      font-size: clamp(1.6rem, 4vw, 2.4rem);
+      font-style: italic;
+      color: var(--accent);
+      width: fit-content;
+      background-image: linear-gradient(currentColor, currentColor);
+      background-size: 0% 1px;
+      background-position: 0 100%;
+      background-repeat: no-repeat;
+      transition: background-size .35s;
+    }
+    .contact a.mail:hover { background-size: 100% 1px; }
+    .socials {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .75rem 1.25rem;
+      color: var(--muted);
+      font-size: .95rem;
+    }
+    .socials a {
+      border-bottom: 1px solid transparent;
+      transition: color .2s, border-color .2s;
+    }
+    .socials a:hover {
+      color: var(--ink);
+      border-bottom-color: var(--accent);
+    }
+
+    footer {
+      padding: 2rem 0 3rem;
+      border-top: 1px solid var(--line);
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+      font-family: var(--mono);
+      font-size: .72rem;
+      color: var(--faint);
+    }
+  </style>
+</head>
+<body>
+  <header class="nav" id="nav">
+    <div class="wrap nav-inner">
+      <a class="brand" href="#top">TKR / AI</a>
+      <ul class="nav-links">
+        <li><a href="#work">Work</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero" style="border: none; padding-top: 2rem;">
+      <div class="hero-bg" aria-hidden="true"></div>
+      <div class="wrap hero-copy">
+        <p class="label">Bengaluru · Remote</p>
+        <h1>Tribhuvan<br /><em>Kumar Reddy</em></h1>
+        <p class="hero-sub">AI Engineer for LLM evaluation, RAG systems, and production ML.</p>
+        <p class="hero-lede">Designing frontier-model benchmarks, training-data workflows, and grounded AI applications — from embeddings to cloud deployment.</p>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="#projects">View projects</a>
+          <a class="btn btn-ghost" href="mailto:tribhuvanreddy236@gmail.com">Email me</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="work">
+      <div class="wrap">
+        <p class="label reveal">Experience</p>
+        <h2 class="section-title reveal">Where the work happens</h2>
+        <p class="section-lede reveal">From ML benchmark design to shipped LMS platforms and cloud infrastructure.</p>
+        <div class="timeline">
+          <article class="job reveal">
+            <div class="job-when">2026 — Present</div>
+            <div>
+              <h3>AI Engineer — Benchmarking & Evaluation</h3>
+              <p class="org">Freelance · Expert Contributor · Remote</p>
+              <p>Design ML benchmark tasks for frontier models with problem statements, datasets, reference solutions, and automated grading. Run GPU difficulty checks on Modal (T4/L4). Contribute to RLHF, SFT, rubrics, response ranking, and quality review.</p>
+            </div>
+          </article>
+          <article class="job reveal">
+            <div class="job-when">Jun 2025 — Present</div>
+            <div>
+              <h3>Software Engineer</h3>
+              <p class="org">FutureForgEx · Bengaluru</p>
+              <p>Built LMS platforms for two clients using React.js and Firebase — courses, assessments, automated grading, instructor dashboards, and analytics. Supported 500+ students across 20+ courses with ~85% engagement and ~95% completion.</p>
+            </div>
+          </article>
+          <article class="job reveal">
+            <div class="job-when">Jun 2024 — May 2025</div>
+            <div>
+              <h3>Cloud & Networking Intern</h3>
+              <p class="org">Harsha Informatics · Tirupati</p>
+              <p>Deployed and maintained Linux lab servers, assisted with AWS configuration and IAM, designed training network topologies, and troubleshot connectivity with standard networking tools.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects">
+      <div class="wrap">
+        <p class="label reveal">Selected work</p>
+        <h2 class="section-title reveal">Projects</h2>
+        <p class="section-lede reveal">Applied AI systems spanning RAG, NLP, classical ML, and network security.</p>
+        <div class="projects">
+          <article class="project reveal">
+            <span class="p-num">01</span>
+            <div>
+              <h3>Document Intelligence & Question Answering</h3>
+              <p>PDF Q&A system with parsing, chunking, embeddings, semantic retrieval, and a RAG pipeline that returns grounded, source-aware answers.</p>
+              <div class="tags">
+                <span class="tag">Python</span><span class="tag">LangChain</span><span class="tag">RAG</span><span class="tag">Hugging Face</span><span class="tag">Streamlit</span>
+              </div>
+            </div>
+          </article>
+          <article class="project reveal">
+            <span class="p-num">02</span>
+            <div>
+              <h3>AI Customer Support Chatbot</h3>
+              <p>Knowledge-grounded support chatbot with semantic search, conversation context, fallback handling, Docker packaging, and AWS-ready deployment.</p>
+              <div class="tags">
+                <span class="tag">LLMs</span><span class="tag">RAG</span><span class="tag">Docker</span><span class="tag">AWS</span><span class="tag">Vector DB</span>
+              </div>
+            </div>
+          </article>
+          <article class="project reveal">
+            <span class="p-num">03</span>
+            <div>
+              <h3>Resume Screening & Job Matching</h3>
+              <p>NLP app that compares resumes to job descriptions, extracts skills, scores semantic alignment, and surfaces skill gaps with recommendations.</p>
+              <div class="tags">
+                <span class="tag">NLP</span><span class="tag">Sentence Transformers</span><span class="tag">Scikit-learn</span>
+              </div>
+            </div>
+          </article>
+          <article class="project reveal">
+            <span class="p-num">04</span>
+            <div>
+              <h3>Student Performance Prediction</h3>
+              <p>ML models on attendance, assessments, and history to predict outcomes, with an interactive dashboard for risk indicators and academic insights.</p>
+              <div class="tags">
+                <span class="tag">Pandas</span><span class="tag">Scikit-learn</span><span class="tag">Streamlit</span>
+              </div>
+            </div>
+          </article>
+          <article class="project reveal">
+            <span class="p-num">05</span>
+            <div>
+              <h3>Network Intrusion Detection</h3>
+              <p>Classification models on traffic and connection features to flag suspicious activity, with an alert-oriented investigation interface.</p>
+              <div class="tags">
+                <span class="tag">ML</span><span class="tag">Network Security</span><span class="tag">Wireshark</span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="skills">
+      <div class="wrap">
+        <p class="label reveal">Stack</p>
+        <h2 class="section-title reveal">Skills & tools</h2>
+        <p class="section-lede reveal">Evaluation-first AI engineering with a production and cloud backbone.</p>
+        <div class="skill-grid">
+          <div class="skill-block reveal">
+            <h3>AI & ML</h3>
+            <p>LLMs · Generative AI · NLP · RAG · Embeddings · Prompt Engineering · RLHF · SFT · Benchmark Design · Model Evaluation</p>
+          </div>
+          <div class="skill-block reveal">
+            <h3>Frameworks</h3>
+            <p>Python · PyTorch · TensorFlow · Scikit-learn · Hugging Face · LangChain · Pandas · NumPy · OpenCV</p>
+          </div>
+          <div class="skill-block reveal">
+            <h3>Cloud & DevOps</h3>
+            <p>AWS · Docker · Terraform · Jenkins · Ansible · Modal · Linux · Azure Fundamentals</p>
+          </div>
+          <div class="skill-block reveal">
+            <h3>Product & Data</h3>
+            <p>React.js · Firebase · Streamlit · MySQL · Vector Databases · Git</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="contact">
+      <div class="wrap contact-panel">
+        <p class="label reveal">Contact</p>
+        <h2 class="section-title reveal">Let’s build something measurable</h2>
+        <p class="section-lede reveal">Open to AI engineering, evaluation, and applied LLM work.</p>
+        <a class="mail reveal" href="mailto:tribhuvanreddy236@gmail.com">tribhuvanreddy236@gmail.com</a>
+        <div class="socials reveal">
+          <a href="https://linkedin.com/in/tribhuvan-reddy-40414a326" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="tel:+916305743981">+91 6305743981</a>
+          <span>Bengaluru, India</span>
+        </div>
+        <p class="reveal" style="color: var(--faint); font-family: var(--mono); font-size: .75rem; margin-top: .5rem;">
+          B.Tech CSE · SVCE Tirupati · AWS Cloud Practitioner · AZ-900
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="wrap">
+    <span>© 2026 Tribhuvan Kumar Reddy</span>
+    <span>Built for clarity, not clutter</span>
+  </footer>
+
+  <script>
+    const nav = document.getElementById('nav');
+    const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 20);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) {
+          e.target.classList.add('in');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.reveal').forEach((el, i) => {
+      el.style.transitionDelay = `${Math.min(i % 5, 4) * 60}ms`;
+      io.observe(el);
+    });
+  </script>
+</body>
+</html>
